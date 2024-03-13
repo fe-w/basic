@@ -1,11 +1,20 @@
-const GITHUB_REPOSITORY = '/basic';
+import { updateLinkHref, highlightActiveLink } from './path.js';
+
 class Menu extends HTMLElement {
   constructor() {
     super();
     this.originalHrefs = [];
   }
+
   connectedCallback() {
     const parent = this.parentElement;
+    const newContent = this.buildContent();
+    parent.replaceChild(newContent, this);
+    this.initializeLinks(newContent);
+    this.addEventListeners(newContent);
+  }
+
+  buildContent() {
     const newContent = document.createElement('nav');
     newContent.innerHTML = `
       <div>
@@ -24,59 +33,30 @@ class Menu extends HTMLElement {
         <li><a href="../pages/8/index.html">shadowDOM</a></li>
       </ul>
     `;
+    return newContent;
+  }
 
-    // 링크의 원본 href를 저장하고, 현재 위치에 맞게 업데이트
+  initializeLinks(newContent) {
     const links = newContent.querySelectorAll('a');
     links.forEach((link, index) => {
       this.originalHrefs[index] = link.getAttribute('href');
-      this.updateLinkHref(link, index);
+      updateLinkHref(link, this.originalHrefs[index], globalThis.location);
     });
+    highlightActiveLink(links, globalThis.location.pathname);
+  }
 
-    parent.replaceChild(newContent, this);
-    this.highlightActiveLink(newContent);
-
+  addEventListeners(newContent) {
     document.addEventListener("DOMContentLoaded", () => {
-      const items = document.querySelectorAll('.main-card li');
-      items.forEach(function(item, index) {
+      const items = newContent.querySelectorAll('.main-card li');
+      items.forEach((item, index) => {
         if (index !== 0) {
           const indexText = index;
           item.style.setProperty('--index', `"${indexText}"`);
         }
       });
     });
-    globalThis.addEventListener('popstate', () => this.highlightActiveLink(newContent));
-  }
-
-  updateLinkHref(link, index) {
-    const repoName = GITHUB_REPOSITORY;
-    let basePath = '';
-
-    if (globalThis.location.href.includes(repoName)) {
-      basePath = repoName;
-    }
-
-    const absoluteHref = new URL(basePath + this.originalHrefs[index].substring(2), globalThis.location.origin).href;
-    link.href = absoluteHref;
-  }
-  
-  
-  calculateBasePath() {
-    const pathParts = globalThis.location.pathname.split('/');
-    return globalThis.location.origin + pathParts.slice(0, pathParts.length - 1).join('/') + '';
-  }
-
-
-  highlightActiveLink(newContent) {
-    const links = newContent.querySelectorAll('a');
-    const currentPath = globalThis.location.pathname;
-
-    links.forEach(link => {
-      const linkPath = new URL(link.href, globalThis.location.origin).pathname;
-      if (linkPath === currentPath) {
-        link.classList.add('active-link');
-      } else {
-        link.classList.remove('active-link');
-      }
+    globalThis.addEventListener('popstate', () => {
+      highlightActiveLink(newContent.querySelectorAll('a'), globalThis.location.pathname);
     });
   }
 }

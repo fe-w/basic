@@ -27,5 +27,5 @@ nav div p {margin-top: 16px;}
 
 .index {align-items: flex-start; gap: 16px; justify-content: flex-start; padding: 0px 20px; min-width: 1024px; max-width: 1024px; overflow: scroll; }
 .index a {color: orangered;}
-.index b:nth-of-type(1) {margin-top: 32px;}
+.index h3 {margin-top: 32px;}
 .index p:nth-last-of-type(1) {margin-bottom: 30px;}

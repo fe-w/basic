@@ -1,0 +1,31 @@
+* {margin: 0;padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+body {width: 100%; height: 100%;}
+body {height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px;}
+a {text-decoration: none;}
+a, button {cursor: pointer; line-height: 100%; font-size: 1rem; color: #000;}
+button:hover, a:hover {opacity: .5;}
+li {list-style: none;}
+
+main p {font-size: 1.5rem;}
+
+.area {height: 400px; background: #f7f7f7; min-width: 1064px; max-width: 1064px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.area div {display: flex; gap: 8px; margin-top: 16px;}
+.area div a, .area div button {padding: 8px 20px; border: none; border-radius: 8px; background: #ddd;}
+component-a, component-b {display: none;}
+.active {display: block;}
+
+nav {display: flex; gap: 32px; align-items: center; justify-content: center; flex-direction: column;}
+nav a {padding: 16px; background: #e4efd0; border-radius: 8px; color: #48562e; display: flex; justify-content: center; align-items: center;}
+nav div {text-align: center;}
+nav div p {margin-top: 16px;}
+
+.main-card {display: flex; flex-wrap: wrap; gap: 8px; max-width: 1064px;}
+.main-card a {overflow: hidden; text-overflow: ellipsis; width: 229px; height: 20px; line-height: 100%; font-size: 1.2rem; word-break: break-word; position: relative; padding: 32px 60px; border-radius: 8px;}
+.main-card li a::before {content: var(--index); font-size: 2rem; position: absolute; top: 10px; left: 10px; font-weight: bold; color: #333; }
+.main-card .active-link {color: #fff;background: #385700;}
+.main-card .active-link::before {color: #fff;}
+
+.index {align-items: flex-start; gap: 16px; justify-content: flex-start; padding: 0px 20px; min-width: 1024px; max-width: 1024px; overflow: scroll; }
+.index a {color: orangered;}
+.index b:nth-of-type(1) {margin-top: 32px;}
+.index p:nth-last-of-type(1) {margin-bottom: 30px;}

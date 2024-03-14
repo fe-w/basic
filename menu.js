@@ -1,20 +1,9 @@
 import { updateLinkHref, highlightActiveLink } from './path.js';
 
-class Menu extends HTMLElement {
-  constructor() {
-    super();
-    this.originalHrefs = [];
-  }
+const createMenu = () => {
+  const originalHrefs = [];
 
-  connectedCallback() {
-    const parent = this.parentElement;
-    const newContent = this.buildContent();
-    parent.replaceChild(newContent, this);
-    this.initializeLinks(newContent);
-    this.addEventListeners(newContent);
-  }
-
-  buildContent() {
+  const buildContent = () => {
     const newContent = document.createElement('nav');
     newContent.innerHTML = `
       <div>
@@ -34,18 +23,18 @@ class Menu extends HTMLElement {
       </ul>
     `;
     return newContent;
-  }
+  };
 
-  initializeLinks(newContent) {
+  const initializeLinks = (newContent) => {
     const links = newContent.querySelectorAll('a');
     links.forEach((link, index) => {
-      this.originalHrefs[index] = link.getAttribute('href');
-      updateLinkHref(link, this.originalHrefs[index], globalThis.location);
+      originalHrefs[index] = link.getAttribute('href');
+      updateLinkHref(link, originalHrefs[index], globalThis.location);
     });
     highlightActiveLink(links, globalThis.location.pathname);
-  }
+  };
 
-  addEventListeners(newContent) {
+  const addEventListeners = (newContent) => {
     document.addEventListener("DOMContentLoaded", () => {
       const items = newContent.querySelectorAll('.main-card li');
       items.forEach((item, index) => {
@@ -58,7 +47,16 @@ class Menu extends HTMLElement {
     globalThis.addEventListener('popstate', () => {
       highlightActiveLink(newContent.querySelectorAll('a'), globalThis.location.pathname);
     });
-  }
-}
+  };
 
-customElements.define("component-menu", Menu);
+  const newContent = buildContent();
+  initializeLinks(newContent);
+  addEventListeners(newContent);
+
+  return newContent;
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menu = createMenu();
+  document.body.insertBefore(menu, document.body.firstChild);
+});

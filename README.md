@@ -28,4 +28,4 @@
 
 - How to run  
   local : `http-server`  
-  Github pages : https://fe-w.github.io/basic
+  Github pages : https://js-diffusion.github.io/basic

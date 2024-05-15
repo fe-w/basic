@@ -29,10 +29,3 @@
 - How to run  
   local : `http-server`  
   Github pages : https://js-diffusion.github.io/basic
-
-- basic 서브모듈 실행 방법
-```
-1. 서버 설치 : npm install -g http-server
-2. npx 명령어를 이용한 서버 활성화 : npx http-server ./
-3. 서버 실행 : http-server
-```

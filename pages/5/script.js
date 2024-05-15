@@ -7,7 +7,7 @@ const selectComponent = {
 };
 
 function loadModule(propertyName) {
-  var mainContent = document.getElementById('main-content');
+  let mainContent = document.getElementById('main-content');
   const componentFunc = selectComponent[propertyName];
   mainContent.innerHTML = componentFunc ? componentFunc() : '';
 }
